@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="escrapeMapper">
+
+	<resultMap id="resultEScrape" type="EScrape">
+		<id property="escrape_no" column="escrape_no" />
+		<result property="escrape_bid" column="escrape_bid" />
+		<result property="escrape_resume_no" column="escrape_resume_no" />
+		<result property="escrape_resume_title" column="escrape_resume_title" />
+		<result property="escrape_username" column="escrape_username" />
+		<result property="escrape_userbirthday" column="escrape_userbirthday" />
+		<result property="escrape_hope_salary" column="escrape_hope_salary" />
+		<result property="escrape_career" column="escrape_career" />
+		<result property="escrape_school" column="escrape_school" />
+		<result property="escrape_schoolclass" column="escrape_schoolclass" />
+		<result property="escrape_graduate_yn" column="escrape_graduate_yn" />
+		<result property="escrape_like" column="escrape_like" />
+	</resultMap>
+
+ 
+ 	<insert id="insertEScrape" parameterType="EScrape" useGeneratedKeys="true">
+ 		insert into escrape
+ 		values(escrape_no_seq.nextval, #{escrape_bid}, #{escrape_resume_no}, #{escrape_resume_title}, #{escrape_username}, #{escrape_userbirthday},
+ 		 #{escrape_hope_salary}, #{escrape_career}, #{escrape_school}, #{escrape_schoolclass}, #{escrape_graduate_yn}, #{escrape_like})
+ 	</insert>
+
+	<delete id="deleteEScrape" parameterType="EScrape">
+		delete from escrape
+		where escrape_resume_no = #{escrape_resume_no} and escrape_bid = #{escrape_bid}
+	</delete>
+	
+	<update id="updateEScrape" parameterType="EScrape">
+		update escrape
+		set escrape_like = #{escrape}
+		where escrape_resume_no = #{escrape_resume_no} and escrape_bid = #{escrape_bid}
+	</update>
+	
+	<select id="selectEScrape" parameterType="EScrape" resultMap="resultEScrape" useCache="true">
+		select * from escrape where escrape_resume_no = #{escrape_resume_no} and escrape_bid = #{escrape_bid}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

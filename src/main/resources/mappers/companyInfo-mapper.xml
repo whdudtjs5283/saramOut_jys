@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="companyInfoMapper">
+
+	<resultMap id="resultCompanyInfo" type="CompanyInfo">
+		<id property="bid" column="bid" />
+		<result property="image" column="image" />
+		<result property="company_type" column="company_type" />
+		<result property="sales" column="sales" />
+		<result property="represent" column="represent" />
+		<result property="employees" column="employees" />
+		<result property="establish" column="establish" />
+		<result property="homepage" column="homepage" />
+		<result property="renameimage" column="renameimage" />
+	</resultMap>
+
+<!-- 	<select id="selectLogin" parameterType="Member" 
+	 resultMap="resultMember" useCache="true">
+		select * from member 
+		where userid = #{userid} 
+		and userpwd = #{userpwd}
+	</select> -->
+	
+	<!-- <select id="selectCheckId" parameterType="string" 
+	resultType="_int" useCache="true">
+		select count(userid) from member 
+		where userid = #{userid}
+	</select> -->
+	
+ 	<select id="selectCompanyInfo" parameterType="string" 
+	resultType="CompanyInfo" useCache="true">
+		select * from companyinfo 
+		where bid = #{bid}
+	</select> 
+	
+ <select id="selectList" resultMap="resultCompanyInfo" 
+	useCache="true">
+		select * from companyinfo
+	</select>  
+	
+	<insert id="insertCompanyInfo" parameterType="CompanyInfo" useGeneratedKeys="true">
+		insert into companyinfo 
+		values (#{bid}, #{image}, #{company_type}, 
+		#{sales}, #{represent}, #{employees}, #{establish}, #{homepage}, #{renameimage})
+	</insert>
+	
+	<!-- <delete id="deleteMember" parameterType="string">
+		delete from member where userid = #{userid}
+	</delete> -->
+	
+	<update id="updateCompanyInfo" parameterType="CompanyInfo">
+		update companyinfo 
+		set image = #{image}, company_type = #{company_type}, sales = #{sales}, 
+		represent = #{represent}, employees = #{employees}, establish = #{establish}, 
+		homepage = #{homepage}, renameimage = #{renameimage} where bid = #{bid}
+	</update>  
+
+
+
+</mapper>

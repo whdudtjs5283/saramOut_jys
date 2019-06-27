@@ -1,0 +1,274 @@
+
+공공데이터 인증키 사용기간이 있으므로...한번 더 만들어야될듯
+
+///////////
+
+  String urlStr = 
+	  "http://openapi.seoul.go.kr:8088/53666b5764646a6833306d7a574a58/json/GetJobInfo/1/50/J00106";
+	  
+	  
+	  GetJobInfo/1/50/J00106
+	  이부분에서 50을 300으로 올리면 300개가 뽑아져옴.
+
+
+/////
+	/// RecruitController의 사본 RecruitController3을 만들어놨늗네 매핑 value값이 같으면 에러가남
+	@RequestMapping(value="recruitlist.do")
+	public String recruitMethod(ModelAndView mv) {
+		
+	    try{
+	    	 
+	          // 서비스 인증키입니다. 공공데이터포털에서 제공해준 인증키를 넣어주시면 됩니다.
+	          String serviceKey = "개인별로 받은 인증키를 넣어주세요";
+	          
+=========
+
+또한 데이터베이스 컬럼값에 언더바 _ 를 사용하지말자
+
+=======
+
+
+계속 객체 insert 가 안되서 찾아보니, 아무문제없고
+dao에서 객체를 안보내고있었음.. 
+return session.insert("recruitMapper.insertRecruit", recruit2); 로 변경하니 됨
+
+
+============
+
+create table Recruit(
+    JOREGISTNO varchar2(50) Constraint pk_WorkInfo primary key,
+    
+  일때 무결성 제약 조건을 어겻다고 해서...지워줌
+  
+  
+=================
+
+콘트롤러에서 vo 변수값에 set이 안되길래 vo를 확인해보니..
+
+
+	public void setDtycn(String dtycn) {
+	dtycn = dtycn;
+	}
+	
+	처리가 되어잇었음..
+	
+	
+	
+	public void setDtycn(String dtycn) {
+		this.dtycn = dtycn;
+	}
+
+	
+	로 수정함.
+	
+	원인은 변수명을 대문자로해서 그럼.
+	
+	
+	---> 변수를 소문자로 바꿨는데
+	
+	Property [REREGISTNO] not found on type 오류가 남..
+	
+	알고보니 뷰단에서 	<td>${Recruit.REREGISTNO } </td> 하고있음..
+	
+
+
+///
+현재 초값을 뒤에 넣으면서 같은 값이 두개 들어가서 오류가 나고있음. 무결성.
+
+->고쳐야함
+
+
+---------------
+
+
+VO를 제대로 만드니 맵이 표시가 안된다.
+
+VO에 get이나 set에 this가 추가되고 안되는 현상.
+
+
+----------
+
+
+insert해서 api 값 넣을때 recruit이랑 recruit2 값을 혼동하면안됨
+
+
+
+--------------------------
+
+recruitDetail 의
+
+
+	
+	
+	// 주소 직접 찍어서 표시, 그냥 '${recruit.BASSADRESCN }' 해도된다고함.
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+        
+        
+에서 계속 에러났는데
+
+//부분이 주석이아니라 계속 출력되고있었음..자바스크립트 안의 주석문 제거하니 구동됨.
+
+
+=======================
+
+네아로를 설치하고나서 톰캣구동이 안됨..
+org.springframework.beans.factory.UnsatisfiedDependencyException: 
+Error creating bean with name 'naverLoginController':
+ Unsatisfied dependency expressed through method 'setNaverLoginBO' parameter 0; 
+ nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: 
+ No qualifying bean of type 'org.kh.saramout.member.naver.bo.NaverLoginBO' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+
+
+이런오류메세지 뜸. 
+
+	<beans:bean id="naverLoginBO" class="org.kh.saramout.member.naver.bo.NaverLoginBO" />
+	
+	servlet-context.에다가 추가하니 없어짐
+	
+
+
+====
+네이버 로그인이 계속 오류나서
+개발자 센터에서 서비스 URL 을 JSP말고 밑으루 변경함
+http://localhost:8089/saramout/NewNaverlogin.do
+
+CALLBACK URL은
+http://localhost:8089/saramout/callback.do
+
+============
+
+다른아이디로 네이버 로그인이 개발중으로 뜨면
+
+멤버관리-테스터 ID 등록(최대 20개) 에서 네이버아이디를 등록해야됨
+
+
+
+===
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+선언부 1번째 줄에 오류나면 그냥 복사해서 지웠다 다시 복붙하면 에러사라짐
+
+===
+
+ajax전송할때 form태그하면 두번 전송이된다
+
+그래서 깜빡거리면서 없어짐
+
+
+
+테이블안에 div를 넣으면안됨..
+
+그리고 마이바티스는 member객체 하나로 보내야됨. 두개의 변수보내기는 x
+
+리절트타입도 만졌음
+
+============
+
+
+//최초 1회만 네이버 뉴스값을 입력하고, 그값을 계속 set하는 방식으로 출력함
+	  	  	 	//int result = navernewsService.insertNaverNews(naverNews);
+	  	  	 	
+	  	  	 	//값한개만 보내는게 아니라 selectall해서 전체값을 가져와야함
+	  	  	 	
+	  	  	 	mv.addObject("naverNews", naverNews);
+	  	  	 	mv.setViewName("naverNews/recruitDetail" );
+	  	  	 	
+	  	  	 	
+	  	  	 	
+	  	  	 	==========================================
+	  	  	 	로긴폼에서 실제 회원의 아이디랑 비번 변수값으로 보내야됨 이 설정이 어딘지는몰겠음
+	  	  	 	
+========================================
+
+mv.addObject("newsList", newsList);
+		    mv.addObject("recruit", recruit);
+		    mv.setViewName("recruit/recruitDetail" );
+		    return mv;	
+
+이런식으로 두개의 api 값을 가져와서 addObject하려했는데, newsList는 신규라서 보내지지가 않는현상.
+알고보니 newsList를 try catch 안에 선언하지 않고 아예 바깥부분에 초기에 선언해버리고 try에서 set해서 받음.
+그뒤에도 오류가 계속남. bean과 관련한 오류가 남.
+그래서 servlet-contetx부분에
+
+
+		<beans:bean id="NaverNews"
+		class="org.kh.saramout.navernews.model.vo.NaverNews" />
+		
+		추가하니 해결됨.
+		
+============JSON 파싱할때 데이터에 접근하는 법,
+
+   transResult = response.toString();
+          
+          JSONParser parser = new JSONParser();	//파서 선언
+  	      JSONObject obj = (JSONObject) parser.parse(transResult);
+  	      System.out.println("message값으로 옵젝트키 출력 : " + obj.get("message"));
+
+  	      String transResult2 = obj.get("message").toString();
+  	      
+  	      JSONObject obj2 = (JSONObject) parser.parse(transResult2);
+  	      //여기까지 파싱 두번함, 세번해야 접근되는듯
+  	      System.out.println("obj2.get(result)" + obj2.get("result"));
+  	      
+  	      
+이런식으로 두번 세번 계속 접근해야함. toString 화시킨뒤에 파싱하는식으로.
+
+
+
+=============
+
+조회수 올리는작업
+1
+public void addMapply(Employment employment);
+2
+  @Override
+	  public void addMapply(Employment employment) {
+
+		  employmentDao.addMapply(mybatisSession, employment);
+		  
+3
+return session.update("employmentMapper.updateMapply",  employment);
+4
+   <update id="updateMapply" parameterType="Employment">
+		update employment 
+		set mapply = #{mapply} + 1
+		where recruit_num = #{recruit_num}
+
+	</update>
+	
+	=====================
+	처음엔 gender =="m"으로했는데 안올라가서 하단으로 고치니 됨 
+	
+	 if (gender.equals("m")) {
+
+      //남자 지원자 1 올리는 메소드
+      employmentService.addMapply(employment); 
+    
+ String은 ==가 아니라 equals인 이유..
+ 
+ =================
+ 
+ multiple 옵션으로 보내면 스트링 배열로 컨트롤러에 값이 온다.
+ 
+ 이때 String은 size가 아니라 length로..
+ 
+ 
+ 
+ 
+      
+		  
+		    
+		    
+	  	  	 	
+	  	  	 	
+
+
+	          

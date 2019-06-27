@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="enterpriseMapper">
+
+	<resultMap id="resultEnterPrise" type="EnterPrise">
+	
+		<id property="enterpriseno" column="enterpriseno" />
+		<result property="bid" column="bid" />
+		<result property="userpwd" column="userpwd" />
+		<result property="businessno" column="businessno" />
+		
+		<result property="fulladdress" column="address" />
+		<result property="detailaddress" column="detailaddress" />
+		<result property="roadaddress1" column="roadaddress1" />
+		<result property="roadaddress2" column="roadaddress2" />
+		
+		<result property="company" column="company" />
+		<result property="username" column="username" />
+		<result property="bemail" column="bemail" />
+		
+		<result property="userphone" column="userphone" />
+		<result property="companyphone" column="companyphone" />
+		<result property="report" column="report" />
+		
+	</resultMap>
+	
+		<select id="selectLogin" parameterType="EnterPrise" 
+	 resultMap="resultEnterPrise" useCache="true">
+		select * from enterprise 
+		where bid = #{bid} 
+		and userpwd = #{userpwd}
+	</select>
+
+
+	
+	<insert id="insertEnterPrise" parameterType="EnterPrise" useGeneratedKeys="true">
+		insert into enterprise
+		values (enterprise_seq.nextval, #{bid}, #{userpwd}, 
+		#{businessno}, #{fulladdress}, #{detailaddress}, #{roadaddress1}, #{roadaddress2},
+		 #{company}, #{username}, 
+		#{bemail}, #{userphone}, #{companyphone}, 
+		#{report}, default)
+	</insert>
+	
+	
+
+
+
+</mapper>

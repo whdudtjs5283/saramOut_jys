@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="org.kh.saramout.member.model.vo.Member"
+			alias="Member" />
+		<typeAlias
+			type="org.kh.saramout.companyinfo.model.vo.CompanyInfo"
+			alias="CompanyInfo" />
+		<typeAlias alias="Employment"
+			type="org.kh.saramout.employment.model.vo.Employment" />
+		<!-- <typeAlias type="notice.model.vo.Notice" alias="Notice" /> <typeAlias 
+			type="board.model.vo.Board" alias="Board" /> -->
+			<typeAlias alias="Recruit" type="org.kh.saramout.recruit.model.vo.Recruit"/>
+			<typeAlias type="org.kh.saramout.resume.model.vo.Resume" alias="Resume" />
+			
+		<typeAlias alias="NaverNews" type="org.kh.saramout.navernews.model.vo.NaverNews"/>
+
+	<typeAlias alias="EnterPrise" type="org.kh.saramout.enterprise.model.vo.EnterPrise"/>
+	<typeAlias alias="Apply" type="org.kh.saramout.apply.model.vo.Apply"/>
+	
+	<!-- 5월24일 -->
+	<typeAlias alias="EScrape" type="org.kh.saramout.escrape.model.vo.EScrape"/>
+   <typeAlias alias="MScrape" type="org.kh.saramout.mscrape.model.vo.MScrape"/>
+	
+	
+	<typeAlias alias="ResumeCheck" type="org.kh.saramout.resumecheck.model.vo.ResumeCheck"/>
+			
+	</typeAliases>
+
+
+
+	<mappers>
+		<!-- 쿼리문 저장용 매퍼 xml 파일 등록 : 필수 -->
+		<!-- 주의 : 등록된 매퍼 파일 안의 쿼리문 오류가 있으면 톰켓 실행 안 됨. config 파일도 오류로 처리됨. -->
+		<mapper resource="mappers/member-mapper.xml" />
+		<mapper resource="mappers/companyInfo-mapper.xml" />
+		<mapper resource="mappers/employment-mapper.xml"/>
+		<mapper resource="mappers/recruit-mapper.xml"/>
+		<mapper resource="mappers/resume-mapper.xml" />
+		<mapper resource="mappers/navernews-mapper.xml"/>
+	<mapper resource="mappers/enterprise-mapper.xml"/>
+	<mapper resource="mappers/apply-mapper.xml"/>
+		<!-- <mapper resource="mappers/notice-mapper.xml" /> <mapper resource="mappers/board-mapper.xml" 
+			/> -->
+			
+			
+			<!-- 5월24일 두개추가 -->
+			  <mapper resource="mappers/escrape-mapper.xml"/>
+    	  <mapper resource="mappers/mscrape-mapper.xml"/>
+    	  <mapper resource="mappers/resumecheck-mapper.xml"/>
+	</mappers>
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+

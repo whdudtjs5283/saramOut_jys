@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resumeMapper">
+
+	<resultMap id="resultResume" type="Resume">
+		<id property="resume_no" column="resume_no" />
+		<result property="resume_userid" column="resume_userid" />
+		<result property="resume_username" column="resume_username" />
+		<result property="resume_userbirthday" column="resume_userbirthday" />
+		<result property="resume_usergender" column="resume_usergender" />
+		<result property="resume_useremail" column="resume_useremail" />
+		<result property="resume_userphone" column="resume_userphone" />
+		<result property="resume_userfulladdress" column="resume_userfulladdress" />
+		<result property="resume_modification_date" column="resume_modification_date" />
+		<result property="resume_apply_date" column="resume_apply_date" />
+		<result property="resume_title" column="resume_title" />
+		<result property="resume_opic" column="resume_opic" />
+		<result property="resume_rpic" column="resume_rpic" />
+		<result property="resume_school_classification" column="resume_school_classification" />
+		<result property="resume_school" column="resume_school" />
+		<result property="resume_major" column="resume_major" />
+		<result property="resume_entrance_date" column="resume_entrance_date" />
+		<result property="resume_graduate_date" column="resume_graduate_date" />
+		<result property="resume_graduate_yn" column="resume_graduate_yn" />
+		<result property="resume_company" column="resume_company" />
+		<result property="resume_department" column="resume_department" />
+		<result property="resume_grade" column="resume_grade" />
+		<result property="resume_hire_date" column="resume_hire_date" />
+		<result property="resume_retirement_date" column="resume_retirement_date" />
+		<result property="resume_work_contents" column="resume_work_contents" />
+		<result property="resume_license" column="resume_license" />
+		<result property="resume_publication_place" column="resume_publication_place" />
+		<result property="resume_acquisition_date" column="resume_acquisition_date" />
+		<result property="resume_employment_form" column="resume_employment_form" />
+		<result property="resume_hope_salary" column="resume_hope_salary" />
+		<result property="resume_introduce_document" column="resume_introduce_document" />
+		<result property="resume_open_yn" column="resume_open_yn" />
+	</resultMap>
+	
+	<!-- <select id="selectResume" parameterType="int" resultMap="resultResume" useCache="true">
+		select * from resume
+		where resume_no = #{resume_no}
+	</select> -->
+	
+	<select id="selectResume" parameterType="int" resultMap="resultResume" useCache="true">
+		select * from resume
+		where resume_no = #{resume_no}
+	</select>
+
+	<insert id="insertResume" parameterType="Resume" useGeneratedKeys="true">
+		insert into resume
+		values(resume_no_seq.nextval, #{resume_userid}, #{resume_username}, #{resume_userbirthday}, #{resume_usergender}, #{resume_useremail}, #{resume_userphone}, #{resume_userfulladdress},
+				 sysdate, sysdate, #{resume_title}, #{resume_opic}, #{resume_rpic},
+				 #{resume_school_classification}, #{resume_school}, #{resume_major}, #{resume_entrance_date}, #{resume_graduate_date}, #{resume_graduate_yn},
+				 #{resume_company}, #{resume_department}, #{resume_grade}, #{resume_hire_date}, #{resume_retirement_date}, #{resume_work_contents},
+				 #{resume_license}, #{resume_publication_place}, #{resume_acquisition_date}, #{resume_employment_form},
+				 #{resume_hope_salary}, #{resume_introduce_document}, #{resume_open_yn})
+	</insert>
+	
+	<update id="updateResume" parameterType="Resume">
+		update resume set
+				resume_title = #{resume_title}, resume_useremail = #{resume_useremail}, resume_userphone = #{resume_userphone}, resume_userfulladdress = #{resume_userfulladdress}, resume_opic = #{resume_opic}, resume_rpic = #{resume_rpic}, resume_modification_date = sysdate,
+				resume_school_classification = #{resume_school_classification}, resume_school = #{resume_school}, resume_major = #{resume_major}, resume_entrance_date = #{resume_entrance_date}, resume_graduate_date = #{resume_graduate_date}, resume_graduate_yn = #{resume_graduate_yn},
+				resume_company = #{resume_company}, resume_department = #{resume_department}, resume_grade = #{resume_grade}, resume_hire_date = #{resume_hire_date}, resume_retirement_date = #{resume_retirement_date}, resume_work_contents = #{resume_work_contents},
+				resume_license = #{resume_license}, resume_publication_place = #{resume_publication_place}, resume_acquisition_date = #{resume_acquisition_date}, resume_employment_form = #{resume_employment_form},
+				resume_hope_salary = #{resume_hope_salary}, resume_introduce_document = #{resume_introduce_document}, resume_open_yn = #{resume_open_yn}
+		where resume_no = #{resume_no}
+	</update>
+	
+	<delete id="deleteResume" parameterType="int">
+		delete from resume where resume_no = #{resume_no}
+	</delete>
+	
+	<select id="selectResumeList" resultMap="resultResume" useCache="true">
+		select * from resume
+		where resume_userid = #{resume_userid}
+		order by resume_no desc
+	</select>
+	
+	
+	
+	<!-- 5월24일 메소드 두개 추가-->
+	<select id="selectFindTalentCnt" resultType="int">
+		select count(*) from resume
+		where resume_open_yn is not null
+	</select>
+	
+	
+	<select id="selectFindTalentList" resultMap="resultResume" useCache="true">
+		select * 
+		from (select rownum rnum, resume_no, resume_title, resume_modification_date,
+		resume_userid, resume_open_yn, resume_username, resume_usergender,
+		resume_userbirthday, resume_school, resume_open_yn
+		resume_school_classification, resume_major,
+		resume_hope_salary, resume_employment_form, resume_rpic
+	            from (select * from resume
+                where resume_open_yn is not null
+                order by resume_no desc)
+                )
+		where rnum between #{startRow} and #{endRow}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

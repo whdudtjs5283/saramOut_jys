@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="recruitMapper">
+
+<resultMap id="resultRecruit" type="Recruit">
+	
+					
+		<id property="recruit_number" column="recruit_number" />
+		<result property="joregistno" column="joregistno" />
+		<result property='reregistno' column='reregistno'	/>
+
+
+		<result property="jobcodenm" column="jobcodenm" />
+		<result property="acdmcrcmmncodese" column="acdmcrcmmncodese" />
+		<result property="worktimenm" column="worktimenm" />
+		<result property="rceptmthnm" column="rceptmthnm" />
+		<result property="worktmnm" column="worktmnm" />
+		<result property="careercndnm" column="careercndnm" />
+		<result property="jofeinsrsbscrbnm" column="jofeinsrsbscrbnm" />
+		<result property="hopewage" column="hopewage" />
+		<result property="emplymstlecmmnmm" column="emplymstlecmmnmm" />
+		<result property=" workpararbassadrescn" column=" workpararbassadrescn" />
+	<result property="bsnssumrycn" column="bsnssumrycn" />
+	<result property="cmpnynm" column="cmpnynm" />
+	<result property="dtycn" column="dtycn" />
+	<result property="bassadrescn" column="bassadrescn" />
+	<result property="mngrphonno" column="mngrphonno" />
+	<result property="rceptclosnm" column="rceptclosnm" />
+	<result property="starttime" column="starttime" />
+	<result property="endtime" column="endtime" />
+	
+
+	</resultMap>
+	
+	
+		<insert id="insertRecruit" parameterType="Recruit" useGeneratedKeys="true">
+		insert into recruit 
+		values (recruit_number_seq.nextval, #{joregistno}, #{reregistno}, #{jobcodenm}, #{acdmcrcmmncodese},
+		#{worktimenm}, #{rceptmthnm}, #{worktmnm}, #{careercndnm}, #{jofeinsrsbscrbnm}, 
+		#{hopewage},  #{emplymstlecmmnmm}, #{workpararbassadrescn}, #{bsnssumrycn},
+		#{cmpnynm}, #{dtycn}, #{bassadrescn}, #{mngrphonno}, #{rceptclosnm},
+		#{starttime, jdbcType=INTEGER}, #{endtime, jdbcType=INTEGER})
+	</insert>
+	
+	<select id="selectRecruitAll" resultType="Recruit" useCache="true">
+		select * from Recruit 
+	</select>
+	
+	
+	<select id="selectOneRecruit" parameterType="string" 
+	resultType="Recruit" useCache="true">
+		select * from Recruit
+		where joregistno = #{joregistno}
+	</select>
+	
+	<select id="selectListCount" resultType = "_int">
+	select count(*) from recruit
+	</select>
+
+	
+	<select id="selectRecruitList" resultType = "Recruit">
+	<![CDATA[
+			SELECT * FROM ( SELECT ROWNUM RNUM, recruit_number, joregistno,
+			 reregistno, jobcodenm, acdmcrcmmncodese, worktimenm, careercndnm,
+			 jofeinsrsbscrbnm, hopewage, emplymstlecmmnmm,
+			 workpararbassadrescn, bsnssumrycn, cmpnynm, dtycn,
+			 bassadrescn, mngrphonno, rceptclosnm, starttime, endtime  	
+	                        FROM ( SELECT * FROM recruit ORDER BY recruit_number desc )
+	                        ) 
+			WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+		]]>
+	</select>
+	
+	
+	<select id="jobSearch" resultType="Recruit">
+  SELECT * FROM Recruit
+  <choose>
+
+    <when test="콜센터 != null and 콜센터 != null">
+      AND author_name like #{author.name}
+    </when>
+
+    </choose>
+	</select>
+	
+
+
+
+
+
+</mapper>

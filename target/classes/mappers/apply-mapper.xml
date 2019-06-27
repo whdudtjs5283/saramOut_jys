@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="applyMapper">
+
+	<resultMap id="resultApply" type="Apply">
+		<id property="apply_no" column="apply_no" />
+		<result property="apply_employment_no" column="apply_employment_no" />
+		<result property="apply_bid" column="apply_bid" />
+		<result property="apply_company" column="apply_company" />
+		<result property="apply_resume_no" column="apply_resume_no" />
+		<result property="apply_resume_title" column="apply_resume_title" />
+		<result property="apply_date" column="apply_date" />
+		<result property="apply_username" column="apply_username" />
+		<result property="apply_userid" column="apply_userid" />
+		<result property="apply_open_yn" column="apply_open_yn" />
+	</resultMap>
+
+ 
+ 	<insert id="insertApply" parameterType="Apply" useGeneratedKeys="true">
+ 	insert into apply
+ 	values(apply_no_seq.nextval, #{apply_employment_no}, #{apply_bid}, #{apply_company}, #{apply_resume_no}, #{apply_resume_title}, sysdate, #{apply_username}, #{apply_userid}, #{apply_open_yn})
+ 	</insert>
+
+	<select id="selectEApplyList" resultMap="resultApply" useCache="true">
+		select * from apply
+		where apply_bid = #{apply_bid}
+	</select>
+
+<!-- 	<insert id="insertApply" parameterType="Apply" useGeneratedKeys="true">
+ 	insert into apply(apply_no, apply_employment_no, apply_bid, apply_company, apply_resume_no, apply_resume_title, apply_date, apply_username, apply_userid, apply_open_yn)
+	select apply_no_seq.nextval, #{apply_employment_no}, #{apply_bid}, #{apply_company}, #{apply_resume_no},
+	 		(select resume_title from resume where resume_no = #{apply_resume_no}),
+	 		(select resume_apply_date from resume where resume_no = #{apply_resume_no}),
+	 		(select resume_username from resume where resume_no = #{apply_resume_no}), 
+	 		(select resume_userid from resume where resume_no = #{apply_resume_no}), #{apply_open_yn}
+	 from resume
+	 where resume_no = #{apply_resume_no}
+ 	</insert> -->
+ 	
+ 	
+ 	 <select id="selectMApplyList" resultMap="resultApply" useCache="true">
+		select * 
+		from (select rownum rnum, apply_no, apply_employment_no, apply_bid, apply_company, apply_resume_no, apply_resume_title,
+				apply_date, apply_username, apply_userid, apply_open_yn
+	            from (select * from apply
+                where apply_userid = #{apply_userid}
+                order by apply_no desc)
+	           )
+		where rnum between #{startRow} and #{endRow}
+	 </select>
+   
+   	<select id="selectApplyCnt" resultType="int">
+   		select count(*)
+   		from apply
+   		where apply_userid = #{apply_userid}
+   	</select>
+ 	
+
+</mapper>

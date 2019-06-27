@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="employmentMapper">
+
+<resultMap id="resultEmployment" type="Employment">
+		<id property="recruit_num" column="recruit_num" />
+		<result property="recruit_title" column="recruit_title" />
+		<result property="work_field" column="work_field" />
+		<result property="work_type" column="work_type" />
+		<result property="work_area" column="work_area" />
+		<result property="salary" column="salary" />
+		<result property="hire_personnel" column="hire_personnel" />
+		<result property="startdate" column="startdate" />
+		<result property="enddate" column="enddate" />
+		<result property="education" column="education" />
+		<result property="career" column="career" />
+		<result property="prefer" column="prefer" />
+		<result property="benefits" column="benefits" />
+		<result property="work_detail" column="work_detail" />
+		<result property="bid" column="bid" />
+		<result property="count" column="count" />
+		<result property="average" column="average" />
+		<result property="mapply" column="mapply" />
+		<result property="fapply" column="fapply" />
+	</resultMap>
+	
+	
+	<insert id="insertEmployment" parameterType="Employment" useGeneratedKeys="true">
+		insert into employment
+		values (recruit_no_seq.nextval ,#{recruit_title}, #{work_field}, #{work_type}, #{work_area}, #{salary}, #{hire_personnel},
+		#{startdate}, #{enddate}, #{education}, #{career}, #{prefer}, #{benefits}, #{work_detail}, #{bid}, 
+		#{count, jdbcType=INTEGER}, #{average, jdbcType=INTEGER}, #{mapply, jdbcType=INTEGER}, #{fapply, jdbcType=INTEGER} )
+	</insert>
+	
+	<update id="updateEmployment" parameterType="Employment">
+		update employment
+		set recruit_title = #{recruit_title}, work_field = #{work_field}, work_type = #{work_type}, work_area = #{work_area},
+		salary = #{salary}, hire_personnel = #{hire_personnel}, startdate = #{startdate}, enddate = #{enddate}, education = #{education},
+		career = #{career}, prefer = #{prefer}, benefits = #{benefits}, work_detail = #{work_detail},  bid = #{bid} where recruit_num = #{recruit_num}
+	</update>
+	
+	<delete id="deleteEmployment" parameterType="int">
+		delete from employment where recruit_num = #{recruit_num}
+	</delete>
+	
+	<select id="selectEmploymentList" resultMap="resultEmployment" useCache="true">
+		select * from employment
+	</select>
+	
+	<select id="selectAllEmploymentList" resultMap="resultEmployment" useCache="true">
+		select * from employment
+	</select>
+	
+	<select id="selectEmploymentDetail" parameterType="int" resultMap="resultEmployment" useCache="true">
+      select * from employment where recruit_num = #{recruit_num}
+   </select>
+   
+   <update id="updateMapply" parameterType="Employment">
+		update employment 
+		set mapply = #{mapply} + 1
+		where recruit_num = #{recruit_num}
+
+	</update>
+	
+	<update id="updateFapply" parameterType="Employment">
+		update employment 
+		set fapply = #{fapply} + 1
+		where recruit_num = #{recruit_num}
+
+	</update>
+   
+   
+   
+	
+	</mapper>

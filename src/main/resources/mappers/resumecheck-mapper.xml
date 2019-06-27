@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resumeCheckMapper">
+
+	<resultMap id="resultResumeCheck" type="ResumeCheck">
+		<id property="rc_no" column="rc_no" />
+		<result property="rc_userid" column="rc_userid" />
+		<result property="rc_bid" column="rc_bid" />
+		<result property="rc_company" column="rc_company" />
+		<result property="rc_recruitcnt" column="rc_recruitcnt" />
+		<result property="rc_open_date" column="rc_open_date" />
+		<result property="rc_check" column="rc_check" />
+	</resultMap>
+ 
+ 	<insert id="insertRC" parameterType="ResumeCheck" useGeneratedKeys="true">
+ 	insert into resumecheck
+ 	values(rc_no_seq.nextval, #{rc_userid}, #{rc_bid}, #{rc_company}, #{rc_recruitcnt}, sysdate, #{rc_check})
+ 	</insert>
+
+	<select id="selectRCListCnt" resultType="int">
+		select count(*) from resumecheck
+		where rc_userid = #{rc_userid}
+	</select>
+	
+	
+	<select id="selectRCList" resultMap="resultResumeCheck" useCache="true">
+		select * 
+		from (select rownum rnum, rc_no, rc_userid, rc_bid, rc_company, rc_recruitcnt, rc_open_date, rc_check
+	            from (select * from resumecheck
+                where rc_userid = #{rc_userid}
+                order by rc_no desc)
+	           )
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="selectCheckCnt" resultType="int">
+		select count(*) from resumecheck
+		where rc_userid = #{rc_userid} and rc_check = '미확인'
+	</select>
+	
+	<update id="updateCheck" parameterType="String">
+		update resumecheck
+		set rc_check = '확인'
+		where rc_userid = #{rc_userid}
+	</update>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mscrapeMapper">
+
+	<resultMap id="resultMScrape" type="MScrape">
+		<id property="mscrape_no" column="mscrape_no" />
+		<result property="mscrape_recruit_no" column="mscrape_recruit_no" />
+		<result property="mscrape_recruit_bid" column="mscrape_recruit_bid" />
+		<result property="mscrape_recruit_title" column="mscrape_recruit_title" />
+		<result property="mscrape_recruit_enddate" column="mscrape_recruit_enddate" />
+		<result property="mscrape_company" column="mscrape_company" />
+		<result property="mscrape_career" column="mscrape_career" />
+		<result property="mscrape_education" column="mscrape_education" />
+		<result property="mscrape_workarea" column="mscrape_workarea" />
+		<result property="mscrape_workfield" column="mscrape_workfield" />
+		<result property="mscrape_worktype" column="mscrape_worktype" />
+		<result property="mscrape_like" column="mscrape_like" />
+		<result property="mscrape_userid" column="mscrape_userid" />
+	</resultMap>
+ 
+ 	<insert id="insertMScrape" parameterType="MScrape" useGeneratedKeys="true">
+ 		insert into mscrape
+ 		values(mscrape_no_seq.nextval, #{mscrape_recruit_no}, #{mscrape_recruit_bid}, #{mscrape_recruit_title}, #{mscrape_recruit_enddate}, #{mscrape_company},
+ 		 #{mscrape_career}, #{mscrape_education}, #{mscrape_workarea}, #{mscrape_workfield}, #{mscrape_worktype}, #{mscrape_like}, #{mscrape_userid})
+ 	</insert>
+
+	<delete id="deleteMScrape" parameterType="MScrape">
+		delete from mscrape
+		where mscrape_userid = #{mscrape_userid} and mscrape_recruit_no = #{mscrape_recruit_no}
+	</delete>
+	
+	<select id="selectMScrape" parameterType="MScrape" resultMap="resultMScrape" useCache="true">
+		select * from mscrape where mscrape_recruit_no = #{mscrape_recruit_no} and mscrape_userid = #{mscrape_userid}
+	</select>
+	
+	<select id="selectMScrapeList" resultMap="resultMScrape" useCache="true">
+		select * from mscrape
+		where mscrape_userid = #{mscrape_userid}
+		order by mscrape_no desc
+	</select>
+	<select id="selectMScrapeCnt" resultType="int">
+		select count(*)
+		from mscrape
+		where mscrape_userid = #{mscrape_userid}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
